@@ -1,0 +1,81 @@
+Ne t’inquiète pas 😊 On va faire simplement sur ton iPhone.
+
+1. Voici le code à copier
+
+Appuie sur Copier le code en haut du bloc, puis colle-le dans la grande zone blanche de GitHub, là où tu vois Enter file contents here.
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AVIA-MINES AI</title>
+<style>
+body{background:#090b10;color:white;font-family:Arial;text-align:center;padding:15px}
+h1{color:#f4c542}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:400px;margin:20px auto}
+.cell{aspect-ratio:1;background:#252c3a;color:white;border:1px solid #f4c542;border-radius:10px;font-size:22px}
+button{padding:12px;margin:5px;border:0;border-radius:8px;background:#f4c542;font-weight:bold}
+#result{background:#171d29;padding:15px;border-radius:10px;line-height:1.7}
+</style>
+</head>
+<body>
+<h1>⛏️ AVIA-MINES AI</h1>
+<p>Assistant visuel du jeu Mines</p>
+<p>Nombre de mines :</p>
+<select id="mines">
+<option value="1">1 mine</option>
+<option value="3">3 mines</option>
+<option value="5" selected>5 mines</option>
+<option value="10">10 mines</option>
+<option value="15">15 mines</option>
+<option value="20">20 mines</option>
+<option value="24">24 mines</option>
+</select>
+<div id="grid" class="grid"></div>
+<button onclick="analyser()">ANALYSER</button>
+<button onclick="reset()">EFFACER</button>
+<div id="result">Marque les résultats observés puis analyse.</div>
+<p style="font-size:12px">Les cases cachées ne sont pas prédictibles avec certitude. Aucun gain n'est garanti.</p>
+<script>
+const grid=document.getElementById("grid");
+let cases=[];
+function creer(){
+grid.innerHTML="";cases=[];
+for(let i=0;i<25;i++){
+let b=document.createElement("button");
+b.className="cell";b.textContent="?";b.dataset.etat="cache";
+b.onclick=()=>{
+if(b.dataset.etat==="cache"){b.dataset.etat="or";b.textContent="💎";}
+else if(b.dataset.etat==="or"){b.dataset.etat="mine";b.textContent="💣";}
+else{b.dataset.etat="cache";b.textContent="?";}
+};
+cases.push(b);grid.appendChild(b);
+}
+}
+function analyser(){
+let n=+document.getElementById("mines").value;
+let or=cases.filter(c=>c.dataset.etat==="or").length;
+let mv=cases.filter(c=>c.dataset.etat==="mine").length;
+let ch=cases.filter(c=>c.dataset.etat==="cache").length;
+let risque=ch?Math.min(100,Math.max(0,n-mv)/ch*100):0;
+document.getElementById("result").innerHTML=
+"💎 Or observé : "+or+"<br>💣 Mines observées : "+mv+
+"<br>❔ Cases cachées : "+ch+
+"<br>Risque moyen théorique : "+risque.toFixed(1)+" %"+
+"<br><br>Ce calcul ne révèle pas les cases sûres.";
+}
+function reset(){creer();document.getElementById("result").textContent="Grille effacée.";}
+creer();
+</script>
+</body>
+</html>
+
+2. Après avoir copié le code
+
+* Retourne dans Safari sur la page GitHub.
+* Vérifie que le nom du fichier est index.html.
+* Appuie dans la grande zone blanche et choisis Coller.
+* Quand le code apparaît, appuie sur Valider les modifications….
+
+Dis-moi : est-ce que tu vois maintenant le bouton « Copier le code » au-dessus du bloc ?
